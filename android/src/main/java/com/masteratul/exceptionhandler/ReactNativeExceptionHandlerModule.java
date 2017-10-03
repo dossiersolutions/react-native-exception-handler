@@ -40,8 +40,4 @@ public class ReactNativeExceptionHandlerModule extends ReactContextBaseJavaModul
           }
       });
   }
-
-   public static void replaceErrorScreenActivityClass(Class errorScreenActivityClass){
-       errorIntentTargetClass = errorScreenActivityClass;
-   }
 }
