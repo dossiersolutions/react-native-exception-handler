@@ -31,28 +31,6 @@ void (^nativeErrorCallbackBlock)(NSException *exception, NSString *readeableExce
 //variable to hold the js error handler when setting up the error handler in RN.
 void (^jsErrorCallbackBlock)(NSException *exception, NSString *readeableException);
 
-//variable that holds the default native error handler
-void (^defaultNativeErrorCallbackBlock)(NSException *exception, NSString *readeableException) =
-^(NSException *exception, NSString *readeableException){
-    
-    UIAlertController* alert = [UIAlertController
-                                alertControllerWithTitle:@"Unexpected error occured"
-                                message:[NSString stringWithFormat:@"%@\n%@",
-                                         @"Appologies..The app will close now \nPlease restart the app\n",
-                                         readeableException]
-                                preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIApplication* app = [UIApplication sharedApplication];
-    UIViewController * rootViewController = app.delegate.window.rootViewController;
-    [rootViewController presentViewController:alert animated:YES completion:nil];
-    
-    [NSTimer scheduledTimerWithTimeInterval:5.0
-                                     target:[ReactNativeExceptionHandler class]
-                                   selector:@selector(releaseExceptionHold)
-                                   userInfo:nil
-                                    repeats:NO];
-};
-
 
 // ====================================
 // REACT NATIVE MODULE EXPOSED METHODS
@@ -107,8 +85,6 @@ RCT_EXPORT_METHOD(setHandlerforNativeException:(RCTResponseSenderBlock)callback)
     
     if(nativeErrorCallbackBlock != nil){
         nativeErrorCallbackBlock(exception,readeableError);
-    }else{
-        defaultNativeErrorCallbackBlock(exception,readeableError);
     }
     jsErrorCallbackBlock(exception,readeableError);
     
