@@ -13,7 +13,6 @@ public class ReactNativeExceptionHandlerModule extends ReactContextBaseJavaModul
 
   private ReactApplicationContext reactContext;
     private Activity activity;
-    private static Class errorIntentTargetClass = DefaultErrorScreen.class;
     private Callback callbackHolder;
 
     public ReactNativeExceptionHandlerModule(ReactApplicationContext reactContext) {
@@ -37,11 +36,6 @@ public class ReactNativeExceptionHandlerModule extends ReactContextBaseJavaModul
               String stackTraceString = Log.getStackTraceString(throwable);
               callbackHolder.invoke(stackTraceString);
               Log.d("ERROR",stackTraceString);
-              Intent i = new Intent();
-              i.setClass(activity, errorIntentTargetClass);
-              i.putExtra("stack_trace_string",stackTraceString);
-              i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-              activity.startActivity(i);
               System.exit(0);
           }
       });
