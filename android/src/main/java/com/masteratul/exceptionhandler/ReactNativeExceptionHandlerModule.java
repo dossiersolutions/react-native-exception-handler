@@ -36,7 +36,6 @@ public class ReactNativeExceptionHandlerModule extends ReactContextBaseJavaModul
               String stackTraceString = Log.getStackTraceString(throwable);
               callbackHolder.invoke(stackTraceString);
               Log.d("ERROR",stackTraceString);
-              System.exit(0);
           }
       });
   }
